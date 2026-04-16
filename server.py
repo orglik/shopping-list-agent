@@ -54,7 +54,7 @@ def shopping_list():
         print(f"Claude response: {result}")
 
         # 4. Send it back to Tasker
-        return jsonify({"list": result})
+        return result, 200, {'Content-Type': 'text/plain; charset=utf-8'})
 
     except Exception as e:
         print(f"ERROR: {traceback.format_exc()}")
