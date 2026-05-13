@@ -61,13 +61,6 @@ def shopping_list():
         return jsonify({"error": str(e)}), 500
 
 
-# -------------------------------------------------------
-# Health-check endpoint
-# -------------------------------------------------------
-@app.route("/", methods=["GET"])
-def health():
-    return "Shopping List Agent is running! ✅"
-
 @app.route("/joke", methods=["POST"])
 def joke():
     try:
