@@ -104,6 +104,132 @@ def joke():
         print(f"ERROR: {traceback.format_exc()}")
         return jsonify({"error": str(e)}), 500
 
+@app.route("/joke-kids", methods=["POST"])
+def joke_kids():
+    try:
+        # 1. Get the joke topic 
+        # Support both JSON body and raw text
+        if request.is_json:
+            data = request.get_json(force=True)
+            joke_topic_text = data.get("text", "")
+        else:
+            joke_topic_text = request.data.decode("utf-8")
+
+        if not joke_topic_text:
+            return jsonify({"error": "Missing joke topic"}), 400
+
+        print(f"Received joke topic: {joke_topic_text}")
+
+        # 2. Ask Claude to generate a joke
+        message = client.messages.create(
+            model="claude-sonnet-4-5",
+            max_tokens=1024,
+            system="You are a kids comedian . Your job is to create jokes that make kids laugh. Use simple words a 6 year old understands. Always use a setup and punchline structure. Always be polite. Never make any racial or gender or sexual jokes. Format: one sentence.",
+            messages=[
+                {
+                    "role": "user",
+                    "content": (
+                        f"{joke_topic_text}" 
+                    ),
+                }
+            ],
+        )
+
+        # 3. Pull the text out of Claude's response
+        result = message.content[0].text
+        print(f"Claude response: {result}")
+
+        # 4. Send it back to Tasker
+        return result, 200, {'Content-Type': 'text/plain; charset=utf-8'}
+
+    except Exception as e:
+        print(f"ERROR: {traceback.format_exc()}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/joke-dev", methods=["POST"])
+def joke_dev():
+    try:
+        # 1. Get the joke topic 
+        # Support both JSON body and raw text
+        if request.is_json:
+            data = request.get_json(force=True)
+            joke_topic_text = data.get("text", "")
+        else:
+            joke_topic_text = request.data.decode("utf-8")
+
+        if not joke_topic_text:
+            return jsonify({"error": "Missing joke topic"}), 400
+
+        print(f"Received joke topic: {joke_topic_text}")
+
+        # 2. Ask Claude to generate a joke
+        message = client.messages.create(
+            model="claude-sonnet-4-5",
+            max_tokens=1024,
+            system="You are comedian who is also expert developer. Your job is to create jokes that make developers laugh. the joke should relates to technology and code developing.Reference real things developers experience: bugs, deadlines, Stack Overflow, coffee, Git. Never make any racial or gender or sexual jokes. Format: any length under 10 sentences.",
+            messages=[
+                {
+                    "role": "user",
+                    "content": (
+                        f"{joke_topic_text}" 
+                    ),
+                }
+            ],
+        )
+        # 3. Pull the text out of Claude's response
+        result = message.content[0].text
+        print(f"Claude response: {result}")
+
+        # 4. Send it back to Tasker
+        return result, 200, {'Content-Type': 'text/plain; charset=utf-8'}
+
+    except Exception as e:
+        print(f"ERROR: {traceback.format_exc()}")
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/joke-fashion", methods=["POST"])
+def joke_fashion():
+    try:
+        # 1. Get the joke topic 
+        # Support both JSON body and raw text
+        if request.is_json:
+            data = request.get_json(force=True)
+            joke_topic_text = data.get("text", "")
+        else:
+            joke_topic_text = request.data.decode("utf-8")
+
+        if not joke_topic_text:
+            return jsonify({"error": "Missing joke topic"}), 400
+
+        print(f"Received joke topic: {joke_topic_text}")
+
+        # 2. Ask Claude to generate a joke
+        message = client.messages.create(
+            model="claude-sonnet-4-5",
+            max_tokens=1024,
+            system= "You are comedian who is also an fashion leader/influencer. Your job is to create jokes that make fashion enthusiastic laugh. the joke should relates to lead fashion brand and designers and celebrities. Reference real events, designers, and moments — like the Met Gala, Balenciaga, or Fashion Week. Never make any racial or gender or sexual jokes. Format: any length under 10 sentences.",
+            messages=[
+                {
+                    "role": "user",
+                    "content": (
+                        f"{joke_topic_text}" 
+                    ),
+                }
+            ],
+        )
+
+        # 3. Pull the text out of Claude's response
+        result = message.content[0].text
+        print(f"Claude response: {result}")
+
+        # 4. Send it back to Tasker
+        return result, 200, {'Content-Type': 'text/plain; charset=utf-8'}
+
+    except Exception as e:
+        print(f"ERROR: {traceback.format_exc()}")
+        return jsonify({"error": str(e)}), 500
+
 
 # -------------------------------------------------------
 # Health-check endpoint
@@ -118,6 +244,3 @@ if __name__ == "__main__":
     app.run(host="0.0.0.0", port=port)
 
 
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
