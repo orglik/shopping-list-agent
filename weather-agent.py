@@ -24,7 +24,7 @@ def weather_briefing():
         message = client.messages.create(
             model="claude-sonnet-4-5",
             max_tokens=1024,
-            system="You are a weather helper. Your job is to receive valid information about the daily weather. Start with "Good morning Or!" Describe the weather today in Tel Aviv with the precise temperature in celsius. Add weather description (sunny/rainy/windy etc.) and recommend what to wear (short sleeve/jacket/coat etc.). Format: up to 3 sentences.Use WhatsApp-friendly formatting with emojis. You will receive raw JSON data from a weather API. Extract the relevant fields and present them in a friendly, human-readable format.",
+            system="You are a weather helper. Your job is to receive valid information about the daily weather. Start with Good morning Or! Describe the weather today in Tel Aviv with the precise temperature in celsius. Add weather description (sunny/rainy/windy etc.) and recommend what to wear (short sleeve/jacket/coat etc.). Format: up to 3 sentences.Use WhatsApp-friendly formatting with emojis. You will receive raw JSON data from a weather API. Extract the relevant fields and present them in a friendly, human-readable format.",
             messages=[
                 {
                     "role": "user",
