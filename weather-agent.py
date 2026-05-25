@@ -41,17 +41,17 @@ def weather_briefing():
         
         # 4. Send via Twilio WhatsApp
         twilio_client = Client(
-        os.environ["TWILIO_ACCOUNT_SID"],
-        os.environ["TWILIO_AUTH_TOKEN"]
+            os.environ["TWILIO_ACCOUNT_SID"],
+            os.environ["TWILIO_AUTH_TOKEN"]
         )
 
         twilio_client.messages.create(
-        from_="whatsapp:+14155238886",
-        to="whatsapp:+972509790044",
-        body=result
+            from_="whatsapp:+14155238886",
+            to="whatsapp:+972509790044",
+            body=result
         )
 
-return "Message sent", 200
+        return "Message sent", 200
 
     except Exception as e:
         print(f"ERROR: {traceback.format_exc()}")
