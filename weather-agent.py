@@ -5,6 +5,7 @@ import anthropic
 import os
 import traceback
 import requests
+from twilio.rest import Client
 
 app = Flask(__name__)
 
@@ -37,8 +38,20 @@ def weather_briefing():
         result = message.content[0].text
         print(f"Claude response: {result}")
 
-        # 4. Return to Tasker
-        return result, 200, {'Content-Type': 'text/plain; charset=utf-8'}
+        
+        # 4. Send via Twilio WhatsApp
+        twilio_client = Client(
+        os.environ["TWILIO_ACCOUNT_SID"],
+        os.environ["TWILIO_AUTH_TOKEN"]
+        )
+
+        twilio_client.messages.create(
+        from_="whatsapp:+14155238886",
+        to="whatsapp:+972509790044",
+        body=result
+        )
+
+return "Message sent", 200
 
     except Exception as e:
         print(f"ERROR: {traceback.format_exc()}")
