@@ -1,5 +1,7 @@
 # weather-agent.py — Daily Weather Briefing Agent
 
+from unittest import result
+
 from flask import Flask, request, jsonify
 import anthropic
 import os
@@ -39,23 +41,21 @@ def weather_briefing():
         print(f"Claude response: {result}")
 
         
-        # 4. Send via Twilio WhatsApp
-        twilio_client = Client(
-            os.environ["TWILIO_ACCOUNT_SID"],
-            os.environ["TWILIO_AUTH_TOKEN"]
-        )
+        # 4. Send via Telegram
+telegram_token = os.environ["TELEGRAM_BOT_TOKEN"]
+telegram_chat_id = os.environ["TELEGRAM_CHAT_ID"]
+telegram_url = f"https://api.telegram.org/bot{telegram_token}/sendMessage"
 
-        twilio_client.messages.create(
-            from_="whatsapp:+14155238886",
-            to="whatsapp:+972509790044",
-            body=result
-        )
+requests.post(telegram_url, json={
+    "chat_id": telegram_chat_id,
+    "text": result
+})
 
-        return "Message sent", 200
-
+return "Message sent", 200
+    
     except Exception as e:
-        print(f"ERROR: {traceback.format_exc()}")
-        return jsonify({"error": str(e)}), 500
+    print(f"ERROR: {traceback.format_exc()}")
+return jsonify({"error": str(e)}), 500
 
 @app.route("/", methods=["GET"])
 def health():
