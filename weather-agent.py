@@ -56,7 +56,7 @@ def weather_briefing():
 
 @app.route("/", methods=["GET"])
 def health():
-    return "Weather Agent is running! ✅"
+    return "ok"
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
