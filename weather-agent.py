@@ -5,6 +5,7 @@ import anthropic
 import os
 import traceback
 import requests
+import feedparser
 
 app = Flask(__name__)
 
@@ -53,6 +54,51 @@ def weather_briefing():
     except Exception as e:
         print(f"ERROR: {traceback.format_exc()}")
         return jsonify({"error": str(e)}), 500
+
+@app.route("/news-briefing", methods=["POST"])
+def news_briefing():
+    try:
+        # 1. Fetch RSS feed
+        feed = feedparser.parse("https://www.jpost.com/rss/rssfeedsisraelnews.aspx")
+        headlines = ""
+        for entry in feed.entries[:10]:
+            headlines += f"- {entry.title}\n"
+
+
+        # 2. Pass data to Claude
+        message = client.messages.create(
+            model="claude-sonnet-4-5",
+            max_tokens=1024,
+            system="You are a news helper. Your job is to receive valid information about the daily news. Start with Good morning! Summarize the top 5 news headlines in Israel with brief descriptions. Format: one sentence to each headline, bullet formatted. Use Telegram-friendly formatting with emojis. You will receive a list of news headlines.",
+            messages=[
+                {
+                    "role": "user",
+                    "content": f"{headlines}"
+                }
+            ],
+        )
+
+        # 3. Extract text from Claude's response
+        result = message.content[0].text
+        print(f"Claude response: {result}")
+
+        
+        # 4. Send via Telegram
+        telegram_token = os.environ["TELEGRAM_BOT_TOKEN"]
+        telegram_chat_id = os.environ["TELEGRAM_CHAT_ID"]
+        telegram_url = f"https://api.telegram.org/bot{telegram_token}/sendMessage"
+
+        requests.post(telegram_url, json={
+            "chat_id": telegram_chat_id,
+            "text": result
+        })
+
+        return "Message sent", 200
+
+    except Exception as e:
+        print(f"ERROR: {traceback.format_exc()}")
+        return jsonify({"error": str(e)}), 500
+
 
 @app.route("/", methods=["GET"])
 def health():

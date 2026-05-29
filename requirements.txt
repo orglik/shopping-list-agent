@@ -1,4 +1,4 @@
 flask
 anthropic
 requests
-twilio
+feedparser
