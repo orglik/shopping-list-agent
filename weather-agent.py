@@ -49,7 +49,7 @@ def weather_briefing():
             "text": result
         })
 
-        return "Message sent", 200
+        return "", 204
 
     except Exception as e:
         print(f"ERROR: {traceback.format_exc()}")
@@ -93,7 +93,7 @@ def news_briefing():
             "text": result
         })
 
-        return "Message sent", 200
+        return "", 204
 
     except Exception as e:
         print(f"ERROR: {traceback.format_exc()}")
