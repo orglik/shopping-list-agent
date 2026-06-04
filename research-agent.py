@@ -22,7 +22,7 @@ def research_briefing():
 Every run, you will:
 1. Search the web for recent developments across 4 topics (see below)
 2. Synthesize findings into a single Telegram message
-3. Return ONLY the final message — no preamble, no explanation, no markdown
+3. Return ONLY the formatted output below — nothing else. No search summaries, no "Based on search results", no thinking out loud. Your entire response must be the final Telegram message and nothing else.
 
 SEARCH TOPICS
 Run one focused search per topic. Always include the current date/year in every query.
@@ -50,7 +50,8 @@ RULES
 - If no new layoffs this week, use most recent data and add (prior week).
 - Total message length: under 1,400 characters.
 - Before writing the final output, summarize each search result in 2-3 sentences maximum. Keep search summaries brief to preserve tokens for the final output.
-- No closing line or commentary after the message.""",
+- No closing line or commentary after the message.
+- CRITICAL: Your response must start with the 🇮🇱 emoji. If it does not start with 🇮🇱, you have failed the task.""",
             tools=[{"type": "web_search_20250305", "name": "web_search"}],
             messages=[{"role": "user", "content": "Run the weekly Israeli AI job market research briefing for today."}]
         )
