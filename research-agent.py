@@ -55,7 +55,9 @@ RULES
             tools=[{"type": "web_search_20250305", "name": "web_search"}],
             messages=[{"role": "user", "content": "Run the weekly Israeli AI job market research briefing for today."}]
         )
-
+        # DEBUG
+        print(f"Content blocks: {[block.type for block in message.content]}")
+        
         # 2. Extract text from Claude's response
         result = ""
         for block in message.content:
