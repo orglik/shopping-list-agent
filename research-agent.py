@@ -37,13 +37,13 @@ Return exactly this structure, plain text, no markdown:
 
 🇮🇱 AI & the Israeli Job Market | {DD Month YYYY}
 
-📉 Layoffs: {company names, numbers, % cuts}. Drivers: {2-3 causes}.
+Layoffs: {company names, numbers, % cuts}. Drivers: {2-3 causes}.
 
-🧠 Must-have skills: {3-5 skills}. AI specialists earn a {X}% salary premium.
+Must-have skills: {3-5 skills}. AI specialists earn a {X}% salary premium.
 
-👶↔️👴 Juniors vs Seniors: Juniors — {1 sentence}. Seniors — {1 sentence}.
+Juniors vs Seniors: Juniors — {1 sentence}. Seniors — {1 sentence}.
 
-🔥 This week's top story: {1-2 sentences. Name the company or event.}
+This week's top story: {1-2 sentences. Name the company or event.}
 
 RULES
 - Only include figures with a named source. If no sourced number, omit it.
