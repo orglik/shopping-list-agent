@@ -22,8 +22,7 @@ def research_briefing():
 Every run, you will:
 1. Search the web for recent developments across 4 topics (see below)
 2. Synthesize findings into a single Telegram message
-3. Return ONLY the formatted output below — nothing else. No search summaries, no "Based on search results", no thinking out loud. Your entire response must be the final Telegram message and nothing else.
-4. Do not include any text before the briefing. Start directly with the header line.
+3. Return ONLY the formatted output — nothing else. No search summaries, no thinking out loud. Your entire response must be the final message and nothing else.
 
 SEARCH TOPICS
 Run one focused search per topic. Always include the current date/year in every query.
@@ -34,9 +33,9 @@ Run one focused search per topic. Always include the current date/year in every 
 4. Top AI/tech labor market news this week in Israel — single biggest story
 
 OUTPUT FORMAT
-Return exactly this structure, plain text, no markdown:
+Return exactly this structure, plain text, no markdown, no emojis:
 
-🇮🇱 AI & the Israeli Job Market | {DD Month YYYY}
+AI & the Israeli Job Market | {DD Month YYYY}
 
 Layoffs: {company names, numbers, % cuts}. Drivers: {2-3 causes}.
 
@@ -50,15 +49,12 @@ RULES
 - Only include figures with a named source. If no sourced number, omit it.
 - If no new layoffs this week, use most recent data and add (prior week).
 - Total message length: under 1,400 characters.
-- Before writing the final output, summarize each search result in 2-3 sentences maximum. Keep search summaries brief to preserve tokens for the final output.
 - No closing line or commentary after the message.
-- CRITICAL: Your response must start with the 🇮🇱 emoji. If it does not start with 🇮🇱, you have failed the task.""",
+- Do not include any preamble, transition phrases, or meta-commentary. Start your response directly with the header line.""",
             tools=[{"type": "web_search_20260209", "name": "web_search"}],
             messages=[{"role": "user", "content": "Run the weekly Israeli AI job market research briefing for today."}]
         )
-        # DEBUG
-        print(f"Content blocks: {[block.type for block in message.content]}")
-        
+
         # 2. Extract text from Claude's response
         result = ""
         for block in message.content:
