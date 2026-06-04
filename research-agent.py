@@ -16,7 +16,7 @@ def research_briefing():
         # 1. Call Claude with web search tool
         message = client.messages.create(
             model="claude-sonnet-4-5",
-            max_tokens=3000,
+            max_tokens=4096,
             system="""You are a weekly research agent monitoring the Israeli AI job market.
 
 Every run, you will:
