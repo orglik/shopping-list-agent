@@ -59,7 +59,7 @@ RULES
         result = ""
         for block in message.content:
             if block.type == "text":
-                result = block.text  # keep overwriting — last text block wins
+                result += block.text  # keep overwriting — last text block wins
         
         result = result[:4000]
 
