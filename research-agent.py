@@ -16,13 +16,14 @@ def research_briefing():
         # 1. Call Claude with web search tool
         message = client.messages.create(
             model="claude-sonnet-4-6",
-            max_tokens=4096,
+            max_tokens=3500,
             system="""You are a weekly research agent monitoring the Israeli AI job market.
 
 Every run, you will:
 1. Search the web for recent developments across 4 topics (see below)
 2. Synthesize findings into a single Telegram message
 3. Return ONLY the formatted output below — nothing else. No search summaries, no "Based on search results", no thinking out loud. Your entire response must be the final Telegram message and nothing else.
+4. Do not include any text before the briefing. Start directly with the header line.
 
 SEARCH TOPICS
 Run one focused search per topic. Always include the current date/year in every query.
