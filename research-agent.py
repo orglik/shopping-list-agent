@@ -16,7 +16,7 @@ def research_briefing():
         # 1. Call Claude with web search tool
         message = client.messages.create(
             model="claude-sonnet-4-5",
-            max_tokens=2048,
+            max_tokens=3000,
             system="""You are a weekly research agent monitoring the Israeli AI job market.
 
 Every run, you will:
@@ -49,6 +49,7 @@ RULES
 - Only include figures with a named source. If no sourced number, omit it.
 - If no new layoffs this week, use most recent data and add (prior week).
 - Total message length: under 1,400 characters.
+- Before writing the final output, summarize each search result in 2-3 sentences maximum. Keep search summaries brief to preserve tokens for the final output.
 - No closing line or commentary after the message.""",
             tools=[{"type": "web_search_20250305", "name": "web_search"}],
             messages=[{"role": "user", "content": "Run the weekly Israeli AI job market research briefing for today."}]
@@ -61,7 +62,7 @@ RULES
                 result = block.text
                 break
         result = result[:4000]
-        
+
         # 3. Send via Telegram
         telegram_token = os.environ["TELEGRAM_BOT_TOKEN"]
         telegram_chat_id = os.environ["TELEGRAM_CHAT_ID"]
