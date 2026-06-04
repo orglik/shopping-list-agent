@@ -60,7 +60,10 @@ RULES
         for block in message.content:
             if block.type == "text":
                 result += block.text  # keep overwriting — last text block wins
-        
+        # Strip preamble
+        if "AI & the Israeli Job Market" in result:
+            result = result[result.index("AI & the Israeli Job Market"):]
+
         result = result[:4000]
 
         # 3. Send via Telegram
