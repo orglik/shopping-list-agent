@@ -16,7 +16,7 @@ def research_briefing():
         # 1. Call Claude with web search tool
         message = client.messages.create(
             model="claude-sonnet-4-5",
-            max_tokens=1024,
+            max_tokens=2048,
             system="""You are a weekly research agent monitoring the Israeli AI job market.
 
 Every run, you will:
@@ -60,7 +60,8 @@ RULES
             if block.type == "text":
                 result = block.text
                 break
-
+        result = result[:4000]
+        
         # 3. Send via Telegram
         telegram_token = os.environ["TELEGRAM_BOT_TOKEN"]
         telegram_chat_id = os.environ["TELEGRAM_CHAT_ID"]
