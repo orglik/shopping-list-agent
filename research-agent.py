@@ -15,7 +15,7 @@ def research_briefing():
     try:
         # 1. Call Claude with web search tool
         message = client.messages.create(
-            model="claude-sonnet-4-5",
+            model="claude-sonnet-4-6",
             max_tokens=4096,
             system="""You are a weekly research agent monitoring the Israeli AI job market.
 
@@ -52,7 +52,7 @@ RULES
 - Before writing the final output, summarize each search result in 2-3 sentences maximum. Keep search summaries brief to preserve tokens for the final output.
 - No closing line or commentary after the message.
 - CRITICAL: Your response must start with the 🇮🇱 emoji. If it does not start with 🇮🇱, you have failed the task.""",
-            tools=[{"type": "web_search_20250305", "name": "web_search"}],
+            tools=[{"type": "web_search_20260209", "name": "web_search"}],
             messages=[{"role": "user", "content": "Run the weekly Israeli AI job market research briefing for today."}]
         )
         # DEBUG
