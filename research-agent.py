@@ -50,7 +50,9 @@ RULES
 - If no new layoffs this week, use most recent data and add (prior week).
 - Total message length: under 1,400 characters.
 - No closing line or commentary after the message.
-- Do not include any preamble, transition phrases, or meta-commentary. Start your response directly with the header line.""",
+- Do not include any preamble, transition phrases, or meta-commentary. Start your response directly with the header line.
+- Do not search for information that could enable harm (weapons, exploits, targeted surveillance)
+- Mention source name when facts and numbers are not fully verified.""",
             tools=[{"type": "web_search_20260209", "name": "web_search"}],
             messages=[{"role": "user", "content": "Run the weekly Israeli AI job market research briefing for today."}]
         )
@@ -59,7 +61,7 @@ RULES
         result = ""
         for block in message.content:
             if block.type == "text":
-                result += block.text  # keep overwriting — last text block wins
+                result += block.text  # concatenate all text blocks — full response may span multiple
         # Strip preamble
         if "AI & the Israeli Job Market" in result:
             result = result[result.index("AI & the Israeli Job Market"):]
